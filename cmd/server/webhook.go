@@ -63,6 +63,9 @@ func summarizeMessage(evt *events.Message) map[string]any {
 	if _, viewOnce := unwrapViewOnce(evt.Message); viewOnce {
 		out["viewOnce"] = true
 	}
+	if referral := extractCTWAReferral(evt.Message); referral != nil {
+		out["ctwaReferral"] = referral
+	}
 	if raw, err := protojson.Marshal(evt.Message); err == nil {
 		out["raw"] = json.RawMessage(raw)
 	}
